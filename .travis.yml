@@ -1,6 +1,23 @@
 language: java
 jdk: oraclejdk8
+os:
+  - linux
+  - osx
 
+branches:
+  except:
+    - /.*test$/
+
+env:
+  matrix:
+    - CUSTOM_JDK="oraclejdk8"
+
+
+matrix:
+  exclude:
+     # On OSX, run with default JDK only.
+     - os: osx
+       env: CUSTOM_JDK="oraclejdk8"
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
