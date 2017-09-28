@@ -15,21 +15,21 @@ public class DayTimeImplTest {
     @Test
     public void testDayTime(){
         DayTime dayTime = new DayTimeImpl();
-        boolean actual = dayTime.isMorning("12:30");
+        boolean actual = dayTime.isDay("12:30");
         boolean expect = true;
         assertEquals(actual, expect);
     }
     @Test
     public void testEveningTime(){
         DayTime dayTime = new DayTimeImpl();
-        boolean actual = dayTime.isMorning("19:30");
+        boolean actual = dayTime.isEvening("19:30");
         boolean expect = true;
         assertEquals(actual, expect);
     }
     @Test
     public void testNightTime(){
         DayTime dayTime = new DayTimeImpl();
-        boolean actual = dayTime.isMorning("00:30");
+        boolean actual = dayTime.isNight("00:30");
         boolean expect = true;
         assertEquals(actual, expect);
     }

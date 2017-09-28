@@ -26,9 +26,16 @@ public class HelloCity {
     }
 
     public static void main(String[] args) {
+        args = new String[2];
+        args[0] = "New York";
+        args[1] = "";
         HelloCity helloCity = new HelloCity(new DayTimeImpl());
-        helloCity.cityName = "New York";
-        helloCity.identity = "";
+        if(args.length > 1){
+            helloCity.cityName = args[0];
+            helloCity.identity = args[1];
+        }else if(args.length == 1){
+            helloCity.cityName = args[0];
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         String currentTime = helloCity.getCurrentTime(dateFormat);
         System.out.println(helloCity.showMessage(currentTime));
