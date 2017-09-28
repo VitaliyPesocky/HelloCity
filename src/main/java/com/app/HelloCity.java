@@ -26,9 +26,6 @@ public class HelloCity {
     }
 
     public static void main(String[] args) {
-        args = new String[2];
-        args[0] = "New York";
-        args[1] = "";
         HelloCity helloCity = new HelloCity(new DayTimeImpl());
         if(args.length > 1){
             helloCity.cityName = args[0];
