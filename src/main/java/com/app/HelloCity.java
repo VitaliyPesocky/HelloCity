@@ -32,6 +32,8 @@ public class HelloCity {
             helloCity.identity = args[1];
         }else if(args.length == 1){
             helloCity.cityName = args[0];
+        }else {
+            LOGGER.warn("No one parametr in args[]");
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         String currentTime = helloCity.getCurrentTime(dateFormat);
@@ -39,6 +41,7 @@ public class HelloCity {
     }
 
     private String getCurrentTime(SimpleDateFormat dateFormat) {
+        LOGGER.info("inside method getCurrentTime");
         String currentTime;
         correctCityName = cityName.replace(" ", "_");
         if (identity.isEmpty()) {
@@ -79,10 +82,12 @@ public class HelloCity {
     }
 
     private String getTime(SimpleDateFormat dateFormat) {
+        LOGGER.info("inside method getTime");
         return dateFormat.format(new Date());
     }
 
     private boolean isTimeZone(String testString) {
+        LOGGER.info("inside method isTimeZone");
         String[] timeZones = TimeZone.getAvailableIDs();
         String pattern = ".+" + testString;
         for (String s1 : timeZones) {
