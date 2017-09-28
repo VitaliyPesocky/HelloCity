@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN"
+        "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration debug="false"
+                     xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <!-- output messages to text file -->
+    <appender name="FileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8" />
+        <param name="File" value="\log.txt" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} [%-5p] %c: %m%n" />
+        </layout>
+    </appender>
+    <logger name="com..app.HelloCity">
+        <level value="info" />
+        <appender-ref ref="FileAppender" />
+    </logger>
+    <!-- parameter for describing logger by default -->
+    <root>
+        <priority value="info" />
+        <appender-ref ref="FileAppender" />
+    </root>
+</log4j:configuration>
