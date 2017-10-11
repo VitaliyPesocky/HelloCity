@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.ResourceBundle;
 
 public class HelloCity {
@@ -27,36 +25,24 @@ public class HelloCity {
 
     public static void main(String[] args) {
         HelloCity helloCity = new HelloCity(new DayTimeImpl());
-        if(args.length > 1){
-            helloCity.cityName = args[0];
-            helloCity.identity = args[1];
-        }else if(args.length == 1){
-            helloCity.cityName = args[0];
-        }else {
-            LOGGER.warn("No one parametr in args[]");
-        }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        String currentTime = helloCity.getCurrentTime(dateFormat);
+        helloCity.initFields(args);
+        String currentTime = helloCity.getCurrentTime(new SimpleDateFormat("HH:mm"));
         System.out.println(helloCity.showMessage(currentTime));
     }
 
     private String getCurrentTime(SimpleDateFormat dateFormat) {
         LOGGER.info("inside method getCurrentTime");
-        String currentTime;
         correctCityName = cityName.replace(" ", "_");
-        if (identity.isEmpty()) {
+        if (identity == null) {
             if (isTimeZone(correctCityName)) {
                 dateFormat.setTimeZone(TimeZone.getTimeZone(correctCityName));
-                currentTime = getTime(dateFormat);
             } else {
                 dateFormat.setTimeZone(TimeZone.getDefault());
-                currentTime = getTime(dateFormat);
             }
         } else {
             dateFormat.setTimeZone(TimeZone.getTimeZone(identity));
-            currentTime = getTime(dateFormat);
         }
-        return currentTime;
+        return getTime(dateFormat);
     }
 
     public String showMessage(String currentTime) {
@@ -86,15 +72,36 @@ public class HelloCity {
         return dateFormat.format(new Date());
     }
 
+    private void initFields(String[] args){
+        cityName = args[0];
+        if(args.length > 1){
+            if(isTimeZone1(args[1])){
+                identity = args[1];
+            }else{
+                cityName += " " + args[1];
+                if(args.length > 2){
+                    identity = args[2];
+                }
+            }
+        }
+    }
+
     private boolean isTimeZone(String testString) {
         LOGGER.info("inside method isTimeZone");
         String[] timeZones = TimeZone.getAvailableIDs();
-        String pattern = ".+" + testString;
-        for (String s1 : timeZones) {
-            Pattern p = Pattern.compile(pattern);
-            Matcher m = p.matcher(s1);
-            if (m.matches()) {
-                correctCityName = s1;
+        for (String timeZone : timeZones) {
+            if(timeZone.contains(testString)){
+                correctCityName = timeZone;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isTimeZone1(String text){
+        String[] timeZones = TimeZone.getAvailableIDs();
+        for (String timeZone : timeZones) {
+            if(text.equals(timeZone)){
                 return true;
             }
         }
