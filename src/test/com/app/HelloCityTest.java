@@ -34,4 +34,15 @@ public class HelloCityTest {
         assertEquals(MESSAGES.getString("night") + null + "!", message);
     }
 
+    @Test
+    public void testTimeZone(){
+        boolean isTimeZone = true;
+        assertEquals(helloCity.isTimeZone("Europe/Kiev"), isTimeZone);
+    }
+
+    @Test
+    public void testNameTimeZone(){
+        boolean isNameTimeZone = true;
+        assertEquals(helloCity.isNameTimeZone("Kiev"), isNameTimeZone);
+    }
 }

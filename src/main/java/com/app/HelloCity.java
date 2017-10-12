@@ -3,10 +3,7 @@ package com.app;
 import org.apache.log4j.Logger;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class HelloCity {
 
@@ -34,7 +31,7 @@ public class HelloCity {
         LOGGER.info("inside method getCurrentTime");
         correctCityName = cityName.replace(" ", "_");
         if (identity == null) {
-            if (isTimeZone(correctCityName)) {
+            if (isNameTimeZone(correctCityName)) {
                 dateFormat.setTimeZone(TimeZone.getTimeZone(correctCityName));
             } else {
                 dateFormat.setTimeZone(TimeZone.getDefault());
@@ -73,9 +70,10 @@ public class HelloCity {
     }
 
     private void initFields(String[] args){
+        LOGGER.info("inside method initFields");
         cityName = args[0];
         if(args.length > 1){
-            if(isTimeZone1(args[1])){
+            if(isTimeZone(args[1])){
                 identity = args[1];
             }else{
                 cityName += " " + args[1];
@@ -86,8 +84,8 @@ public class HelloCity {
         }
     }
 
-    private boolean isTimeZone(String testString) {
-        LOGGER.info("inside method isTimeZone");
+    public boolean isNameTimeZone(String testString) {
+        LOGGER.info("inside method isNameTimeZone");
         String[] timeZones = TimeZone.getAvailableIDs();
         for (String timeZone : timeZones) {
             if(timeZone.contains(testString)){
@@ -98,7 +96,8 @@ public class HelloCity {
         return false;
     }
 
-    private static boolean isTimeZone1(String text){
+    public boolean isTimeZone(String text){
+        LOGGER.info("inside method isTimeZone");
         String[] timeZones = TimeZone.getAvailableIDs();
         for (String timeZone : timeZones) {
             if(text.equals(timeZone)){
